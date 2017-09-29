@@ -1,6 +1,6 @@
 {
   "name": "pull.factory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The simplest factory Promise based",
   "main": "index.js",
   "scripts": {

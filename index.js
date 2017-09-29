@@ -64,7 +64,7 @@ module.exports = class PullFactory {
                 .then(() => this._markAsBusy(it))
                 .then(() => fn(it))
                 .then((result) => this._markAsFree(it).then(() => result))
-                .catch((error) => this._markAsFree(it).then(() => Promise.reject(error)))
+                .catch((error) => this._unregister(it).then(() => Promise.reject(error)))
                 .then((result) => {
                   resolve(result);
                   return result;
@@ -167,6 +167,13 @@ module.exports = class PullFactory {
     return Promise.resolve()
       .then(() => {
         return this.instanceRegistry.push({it, free: true});
+      })
+  }
+
+  _unregister(it) {
+    return Promise.resolve()
+      .then(() => {
+        this.instanceRegistry = this.instanceRegistry.filter(({it: anIt}) => anIt !== it)
       })
   }
 
